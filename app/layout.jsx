@@ -1,4 +1,5 @@
 import './globals.css';
+import Script from 'next/script';
 
 export const metadata = {
   title: 'Sanjana Reddy Nenturi · Data Analytics Engineer',
@@ -21,7 +22,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* GoatCounter — free privacy-friendly visitor analytics */}
+        {/* Dashboard: https://sanjanaportfolio.goatcounter.com */}
+        <Script
+          data-goatcounter="https://sanjanaportfolio.goatcounter.com/count"
+          src="//gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }

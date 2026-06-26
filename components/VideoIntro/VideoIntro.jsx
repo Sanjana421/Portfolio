@@ -14,15 +14,15 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
   const videoRef   = useRef(null);
   const bgVideoRef = useRef(null);
 
-  const [isMuted,          setIsMuted]          = useState(false);
-  const [isPlaying,        setIsPlaying]        = useState(true);
-  const [showHint,         setShowHint]         = useState(false);
-  const [hintFading,       setHintFading]       = useState(false);
-  const [videoEnded,       setVideoEnded]       = useState(false);
-  const [avatarReady,      setAvatarReady]      = useState(false);
-  const [clickFeedback,    setClickFeedback]    = useState(null); // 'pause' | 'play' | null
+  const [isMuted,       setIsMuted]       = useState(false);
+  const [isPlaying,     setIsPlaying]     = useState(true);
+  const [showHint,      setShowHint]      = useState(false);
+  const [hintFading,    setHintFading]    = useState(false);
+  const [videoEnded,    setVideoEnded]    = useState(false);
+  const [avatarReady,   setAvatarReady]   = useState(false);
+  const [clickFeedback, setClickFeedback] = useState(null);
 
-  // ── On mount: try autoplay WITH sound ────────────────────
+  // ── On mount: try autoplay WITH sound ──────────────────────
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -30,7 +30,6 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     v.play()
       .then(() => setIsMuted(false))
       .catch(() => {
-        // Browser blocked — fall back to muted
         v.muted = true;
         setIsMuted(true);
         v.play().catch(() => {});
@@ -40,24 +39,19 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       });
   }, []);
 
-  // ── Click anywhere on hero = toggle pause/resume ──────────
+  // ── Click hero = toggle pause/resume ───────────────────────
   const handleHeroClick = useCallback(() => {
     const v = videoRef.current;
     if (!v || videoEnded) return;
-
     if (v.paused) {
-      v.play();
-      setIsPlaying(true);
-      setClickFeedback('play');
+      v.play(); setIsPlaying(true); setClickFeedback('play');
     } else {
-      v.pause();
-      setIsPlaying(false);
-      setClickFeedback('pause');
+      v.pause(); setIsPlaying(false); setClickFeedback('pause');
     }
     setTimeout(() => setClickFeedback(null), 700);
   }, [videoEnded]);
 
-  // ── Mute toggle (button only) ─────────────────────────────
+  // ── Mute toggle ────────────────────────────────────────────
   const toggleMute = useCallback((e) => {
     e.stopPropagation();
     const v = videoRef.current;
@@ -67,7 +61,35 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     if (!v.muted) { setHintFading(true); setTimeout(() => setShowHint(false), 700); }
   }, []);
 
-  // ── Video ended → show avatar ──────────────────────────────
+  // ── Replay (resets video and plays from start with sound) ──
+  const replayVideo = useCallback((e) => {
+    e && e.stopPropagation();
+    const v = videoRef.current;
+    if (!v) return;
+    setVideoEnded(false);
+    setAvatarReady(false);
+    setIsPlaying(true);
+    const bg = bgVideoRef.current;
+    if (bg) {
+      bg.style.transition = 'opacity 1.2s ease';
+      bg.style.opacity = '1';
+      bg.play().catch(() => {});
+    }
+    v.currentTime = 0;
+    v.muted = false;
+    setIsMuted(false);
+    v.play().catch(() => {
+      v.muted = true; setIsMuted(true); v.play().catch(() => {});
+    });
+  }, []);
+
+  // ── Avatar click = toggle play/pause OR replay if ended ────
+  const handleAvatarClick = useCallback((e) => {
+    e.stopPropagation();
+    replayVideo();
+  }, [replayVideo]);
+
+  // ── Video ended → show avatar ───────────────────────────────
   const onVideoEnded = useCallback(() => {
     setIsPlaying(false);
     setVideoEnded(true);
@@ -75,43 +97,14 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     const bg = bgVideoRef.current;
     if (bg) {
       bg.style.transition = 'opacity 2.5s ease';
-      bg.style.opacity    = '0';
+      bg.style.opacity = '0';
       setTimeout(() => bg.pause(), 2600);
     }
   }, []);
 
-  // ── Click avatar → replay WITH sound ─────────────────────
-  const handleAvatarClick = useCallback((e) => {
-    e.stopPropagation();
-    const v = videoRef.current;
-    if (!v) return;
-
-    setVideoEnded(false);
-    setAvatarReady(false);
-    setIsPlaying(true);
-
-    const bg = bgVideoRef.current;
-    if (bg) {
-      bg.style.transition = 'opacity 1.2s ease';
-      bg.style.opacity    = '1';
-      bg.play().catch(() => {});
-    }
-
-    v.currentTime = 0;
-    v.muted = false;
-    setIsMuted(false);
-    v.play().catch(() => {
-      v.muted = true;
-      setIsMuted(true);
-      v.play().catch(() => {});
-    });
-  }, []);
-
-  // ── Keep bg in sync with main video ───────────────────────
   const onVideoPlay  = useCallback(() => { bgVideoRef.current?.play().catch(() => {}); }, []);
   const onVideoPause = useCallback(() => { if (!videoEnded) bgVideoRef.current?.pause(); }, [videoEnded]);
 
-  // ── Scroll to next section ────────────────────────────────
   const scrollToNext = useCallback((e) => {
     e.stopPropagation();
     heroRef.current?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' });
@@ -121,16 +114,7 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     <section ref={heroRef} className={styles.hero} onClick={handleHeroClick}>
 
       {/* Ambient blurred background */}
-      <video
-        ref={bgVideoRef}
-        className={styles.bgVideo}
-        src={videoSrc}
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-hidden="true"
-      />
+      <video ref={bgVideoRef} className={styles.bgVideo} src={videoSrc} autoPlay loop muted playsInline aria-hidden="true" />
 
       {/* Cinematic gradient overlays */}
       <div className={styles.gradientLeft}   aria-hidden="true" />
@@ -146,7 +130,6 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       <div className={styles.videoWrap}>
         <div className={styles.videoGlow} aria-hidden="true" />
 
-        {/* Main video — plays once, click hero to pause/resume */}
         <video
           ref={videoRef}
           className={`${styles.mainVideo} ${videoEnded ? styles.videoHidden : ''}`}
@@ -182,7 +165,7 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
         <div className={styles.videoEdgeFade} aria-hidden="true" />
       </div>
 
-      {/* Click feedback — brief icon flash in center */}
+      {/* Click feedback flash */}
       {clickFeedback && (
         <div className={styles.clickFeedback}>
           {clickFeedback === 'pause' ? <IconPause /> : <IconPlay />}
@@ -195,44 +178,29 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
           Data Analytics Engineer&nbsp;·&nbsp;Portfolio 2026
         </span>
         <h1 className={styles.name}>
-          <span className={styles.firstName}>Sanjana</span>
-          <span className={styles.lastName}>Reddy</span>
+          <span className={styles.firstName}>Sanjana Reddy</span>
+          <span className={styles.lastName}>Nenturi</span>
         </h1>
         <p className={styles.role}>
           Building data systems from raw signals to executive dashboards —<br />
           across research, healthcare, and business domains.
         </p>
-        <div className={styles.stats}>
-          <div className={styles.stat}>
-            <span className={styles.statNum}>3</span>
-            <span className={styles.statLabel}>Concurrent Roles</span>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>300+</span>
-            <span className={styles.statLabel}>Research Subjects</span>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>↓60%</span>
-            <span className={styles.statLabel}>Analysis Turnaround</span>
-          </div>
-        </div>
       </div>
 
-      {/* Controls */}
-      <div className={styles.controls}>
-        {!videoEnded && (
-          <button className={styles.ctrlBtn} onClick={(e) => { e.stopPropagation(); handleHeroClick(); }} aria-label={isPlaying ? 'Pause' : 'Play'}>
-            {isPlaying ? <IconPause /> : <IconPlay />}
-          </button>
-        )}
+      {/* Controls — bottom right */}
+      <div className={styles.controls} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.ctrlBtn} onClick={(e) => { e.stopPropagation(); handleHeroClick(); }} aria-label={isPlaying ? 'Pause' : 'Play'}>
+          {isPlaying ? <IconPause /> : <IconPlay />}
+        </button>
         <button className={styles.ctrlBtn} onClick={toggleMute} aria-label={isMuted ? 'Unmute' : 'Mute'}>
           {isMuted ? <IconMuted /> : <IconSound />}
         </button>
+        <button className={styles.ctrlBtn} onClick={replayVideo} aria-label="Replay from start">
+          <IconReplay />
+        </button>
       </div>
 
-      {/* Sound hint — only if browser blocked autoplay sound */}
+      {/* Sound hint */}
       {showHint && !videoEnded && (
         <div className={`${styles.soundHint} ${hintFading ? styles.soundHintFade : ''}`}>
           <span className={styles.hintPulse} />
@@ -250,21 +218,12 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
   );
 }
 
-/* ── Icons ──────────────────────────────────────────────── */
+/* ── Icons ────────────────────────────────────────────────── */
 function IconPlay() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-      <path d="M2.5 1.5l10 5.5-10 5.5V1.5z" />
-    </svg>
-  );
+  return <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2.5 1.5l10 5.5-10 5.5V1.5z" /></svg>;
 }
 function IconPause() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-      <rect x="2" y="1.5" width="3.5" height="11" rx="1" />
-      <rect x="8.5" y="1.5" width="3.5" height="11" rx="1" />
-    </svg>
-  );
+  return <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1.5" width="3.5" height="11" rx="1" /><rect x="8.5" y="1.5" width="3.5" height="11" rx="1" /></svg>;
 }
 function IconSound() {
   return (
@@ -279,8 +238,15 @@ function IconMuted() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
       <path d="M6.5 2L3.5 5H1v4h2.5L6.5 12V2z" fill="currentColor" stroke="none" />
-      <line x1="9.5" y1="5" x2="13.5" y2="9" />
-      <line x1="13.5" y1="5" x2="9.5" y2="9" />
+      <line x1="9.5" y1="5" x2="13.5" y2="9" /><line x1="13.5" y1="5" x2="9.5" y2="9" />
+    </svg>
+  );
+}
+function IconReplay() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1.5 7A5.5 5.5 0 1 0 7 1.5" />
+      <polyline points="1.5,3.5 1.5,7 5,7" />
     </svg>
   );
 }
