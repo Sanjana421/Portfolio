@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main>
       <Nav />
-      <VideoIntro videoSrc="/videos/intro.mp4" />
+      <VideoIntro videoSrc="/Portfolio/videos/intro.mp4" />
       <Work />
       <Stack />
       <Trajectory />
