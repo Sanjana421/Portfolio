@@ -5,6 +5,9 @@ const nextConfig = {
   images: { unoptimized: true },
   basePath: '/Portfolio',     // matches https://sanjana421.github.io/Portfolio/
   assetPrefix: '/Portfolio',
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/Portfolio',
+  },
 };
 
 export default nextConfig;

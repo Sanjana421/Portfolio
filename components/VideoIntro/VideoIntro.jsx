@@ -9,7 +9,9 @@ const CinematicLayer = dynamic(
   { ssr: false }
 );
 
-export default function VideoIntro({ videoSrc = '/videos/intro.mp4', avatarSrc = '/avatar.png' }) {
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+export default function VideoIntro({ videoSrc = `${BASE}/videos/intro.mp4`, avatarSrc = `${BASE}/avatar.png` }) {
   const heroRef    = useRef(null);
   const videoRef   = useRef(null);
   const bgVideoRef = useRef(null);
