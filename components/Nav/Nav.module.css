@@ -103,10 +103,22 @@
 /* ── Mobile ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .links { display: none; }
-  .divider { display: none; }           /* hide all dividers when links hidden */
+  .divider { display: none; }
   .pill {
-    padding: 7px 7px 7px 7px;
+    padding: 6px 6px 6px 10px;
     max-width: calc(100vw - 32px);
+    gap: 6px;
   }
-  .cta { padding: 7px 14px; font-size: 10px; }
+  .cta {
+    padding: 6px 14px;
+    font-size: 10px;
+    background: transparent;
+    color: var(--orange);
+    border: 1px solid rgba(255, 140, 66, 0.5);
+    border-radius: 100px;
+  }
+  .cta:hover {
+    background: var(--orange);
+    color: #fff;
+  }
 }

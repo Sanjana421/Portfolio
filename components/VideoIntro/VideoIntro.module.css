@@ -519,6 +519,8 @@
   .ctrlBtn { width: 36px; height: 36px; }
   .scrollIndicator { display: none; }
   .soundHint { top: 88px; right: 16px; }
+  /* vertically center the content block */
+  .content { padding-top: 80px; }
   /* name sizes split — first line smaller to fit two words */
   .firstName { font-size: clamp(32px, 10vw, 56px); }
   .lastName  { font-size: clamp(48px, 14vw, 78px); }
