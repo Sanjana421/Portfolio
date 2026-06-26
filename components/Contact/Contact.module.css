@@ -133,6 +133,10 @@
   font-size: 11px;
   color: var(--surface-2);
   letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
 }
 
 /* Certs */
@@ -199,12 +203,21 @@
 
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 900px) {
-  .top { grid-template-columns: 1fr; gap: 56px; }
   .inner { padding-bottom: 72px; }
 }
 
-@media (max-width: 640px) {
+/* Stack columns at tablet/mobile — was 900px, now 768px */
+@media (max-width: 768px) {
+  .top { grid-template-columns: 1fr; gap: 48px; }
   .section { padding: 80px var(--pad) 0; }
+  .heading { font-size: clamp(32px, 8vw, 64px); }
+  .right { gap: 28px; }
+  .emailBtn { font-size: 12px; padding: 12px 18px; width: 100%; justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .section { padding: 72px var(--pad) 0; }
   .footer { flex-direction: column; gap: 6px; text-align: center; }
   .footerMid { display: none; }
+  .footerName, .footerRight { font-size: 10px; }
 }

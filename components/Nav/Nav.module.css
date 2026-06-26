@@ -103,6 +103,10 @@
 /* ── Mobile ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .links { display: none; }
-  .divider:first-of-type { display: none; }
-  .pill { padding: 7px; }
+  .divider { display: none; }           /* hide all dividers when links hidden */
+  .pill {
+    padding: 7px 7px 7px 7px;
+    max-width: calc(100vw - 32px);
+  }
+  .cta { padding: 7px 14px; font-size: 10px; }
 }

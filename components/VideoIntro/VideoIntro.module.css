@@ -502,12 +502,40 @@
 
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
-  .videoWrap { width: 100%; opacity: 0.4; }
-  .content { padding: 0 5vw; max-width: 100%; }
-  .controls { left: 5vw; bottom: clamp(20px, 6vh, 44px); }
+  .hero { min-height: 100svh; }
+  .videoWrap { width: 100%; opacity: 0.45; }
+  .content {
+    padding: 0 5vw;
+    max-width: 100%;
+    padding-top: 100px; /* clear nav */
+  }
+  /* controls: keep bottom-right, clear the conflicting left */
+  .controls {
+    left: auto;
+    right: 16px;
+    bottom: clamp(20px, 6vh, 44px);
+    gap: 8px;
+  }
+  .ctrlBtn { width: 36px; height: 36px; }
   .scrollIndicator { display: none; }
-  .soundHint { top: 72px; right: 16px; }
-  .firstName, .lastName { font-size: clamp(54px, 15vw, 84px); }
-  .stats { gap: 16px; }
-  .statDivider { height: 22px; }
+  .soundHint { top: 88px; right: 16px; }
+  /* name sizes split — first line smaller to fit two words */
+  .firstName { font-size: clamp(32px, 10vw, 56px); }
+  .lastName  { font-size: clamp(48px, 14vw, 78px); }
+  /* stronger left dark backing so text reads on video */
+  .gradientLeft {
+    background: linear-gradient(
+      to right,
+      rgba(6, 10, 12, 0.99) 0%,
+      rgba(6, 10, 12, 0.97) 40%,
+      rgba(6, 10, 12, 0.7)  65%,
+      transparent 100%
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .firstName { font-size: clamp(28px, 9vw, 48px); }
+  .lastName  { font-size: clamp(42px, 13vw, 66px); }
+  .role { font-size: 13px; }
 }

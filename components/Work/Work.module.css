@@ -115,7 +115,7 @@
 /* ── Grid ─────────────────────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
   gap: 2px;
 }
 
@@ -241,9 +241,15 @@
   .featuredRight { padding: 28px 28px 36px; }
 }
 
+@media (max-width: 768px) {
+  .section { padding: 90px var(--pad) 80px; }
+  .heading { font-size: clamp(32px, 5.5vw, 84px); }
+}
+
 @media (max-width: 640px) {
-  .section { padding: 80px var(--pad) 80px; }
+  .section { padding: 80px var(--pad) 60px; }
   .grid { grid-template-columns: 1fr; }
   .grid .card { padding: 28px 22px; }
   .featuredLeft, .featuredRight { padding: 24px 20px; }
+  .cardTitle { font-size: clamp(18px, 5vw, 26px); }
 }

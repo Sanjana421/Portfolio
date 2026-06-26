@@ -177,6 +177,8 @@
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .section { padding: 80px var(--pad) 80px; }
+  .header { margin-bottom: 48px; }
+  .heading { font-size: clamp(30px, 8vw, 60px); }
 
   .entry {
     grid-template-columns: 1fr;
@@ -200,12 +202,12 @@
   }
 
   .left {
-    align-items: flex-start;
     padding-bottom: 8px;
     flex-direction: row;
     gap: 10px;
-    align-items: center;
+    align-items: center;  /* single declaration — no duplicate */
   }
 
   .right { padding-bottom: 0; }
+  .role { font-size: clamp(16px, 4.5vw, 22px); }
 }

@@ -106,10 +106,14 @@
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 640px) {
   .section { padding: 80px var(--pad) 80px; }
+  .header { margin-bottom: 48px; }
+  .heading { font-size: clamp(28px, 8vw, 52px); }
   .grid { grid-template-columns: 1fr 1fr; }
-  .group { padding: 24px 18px; }
+  .group { padding: 20px 14px; }
 }
 
-@media (max-width: 380px) {
+/* Single column for phones — 480px catches all modern mobiles */
+@media (max-width: 480px) {
   .grid { grid-template-columns: 1fr; }
+  .group { padding: 22px 18px; }
 }
