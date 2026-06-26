@@ -14,46 +14,50 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
   const videoRef   = useRef(null);
   const bgVideoRef = useRef(null);
 
-  const [isMuted,     setIsMuted]     = useState(false); // try with sound first
-  const [isPlaying,   setIsPlaying]   = useState(true);
-  const [showHint,    setShowHint]    = useState(false); // only show if sound blocked
-  const [hintFading,  setHintFading]  = useState(false);
-  const [videoEnded,  setVideoEnded]  = useState(false);
-  const [avatarReady, setAvatarReady] = useState(false);
+  const [isMuted,          setIsMuted]          = useState(false);
+  const [isPlaying,        setIsPlaying]        = useState(true);
+  const [showHint,         setShowHint]         = useState(false);
+  const [hintFading,       setHintFading]       = useState(false);
+  const [videoEnded,       setVideoEnded]       = useState(false);
+  const [avatarReady,      setAvatarReady]      = useState(false);
+  const [clickFeedback,    setClickFeedback]    = useState(null); // 'pause' | 'play' | null
 
-  // ── On mount: try to autoplay WITH sound ─────────────────
+  // ── On mount: try autoplay WITH sound ────────────────────
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = false;
     v.play()
-      .then(() => {
-        setIsMuted(false);
-      })
+      .then(() => setIsMuted(false))
       .catch(() => {
-        // Browser blocked sound — fall back to muted autoplay
+        // Browser blocked — fall back to muted
         v.muted = true;
         setIsMuted(true);
         v.play().catch(() => {});
-        // Show hint after brief delay
         setTimeout(() => setShowHint(true), 800);
-        const fade = setTimeout(() => setHintFading(true), 5000);
-        const hide = setTimeout(() => setShowHint(false), 6200);
-        return () => { clearTimeout(fade); clearTimeout(hide); };
+        setTimeout(() => setHintFading(true), 5000);
+        setTimeout(() => setShowHint(false), 6200);
       });
   }, []);
 
-  // ── Click hero → unmute (only during first play while muted) ──
+  // ── Click anywhere on hero = toggle pause/resume ──────────
   const handleHeroClick = useCallback(() => {
     const v = videoRef.current;
-    if (!v || !isMuted || videoEnded) return;
-    v.muted = false;
-    setIsMuted(false);
-    setHintFading(true);
-    setTimeout(() => setShowHint(false), 700);
-  }, [isMuted, videoEnded]);
+    if (!v || videoEnded) return;
 
-  // ── Manual controls ────────────────────────────────────────
+    if (v.paused) {
+      v.play();
+      setIsPlaying(true);
+      setClickFeedback('play');
+    } else {
+      v.pause();
+      setIsPlaying(false);
+      setClickFeedback('pause');
+    }
+    setTimeout(() => setClickFeedback(null), 700);
+  }, [videoEnded]);
+
+  // ── Mute toggle (button only) ─────────────────────────────
   const toggleMute = useCallback((e) => {
     e.stopPropagation();
     const v = videoRef.current;
@@ -62,14 +66,6 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     setIsMuted(v.muted);
     if (!v.muted) { setHintFading(true); setTimeout(() => setShowHint(false), 700); }
   }, []);
-
-  const togglePlay = useCallback((e) => {
-    e.stopPropagation();
-    const v = videoRef.current;
-    if (!v || videoEnded) return;
-    if (v.paused) { v.play(); setIsPlaying(true); }
-    else          { v.pause(); setIsPlaying(false); }
-  }, [videoEnded]);
 
   // ── Video ended → show avatar ──────────────────────────────
   const onVideoEnded = useCallback(() => {
@@ -84,18 +80,16 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
     }
   }, []);
 
-  // ── Click avatar → replay video WITH sound ─────────────────
+  // ── Click avatar → replay WITH sound ─────────────────────
   const handleAvatarClick = useCallback((e) => {
     e.stopPropagation();
     const v = videoRef.current;
     if (!v) return;
 
-    // Reset avatar state
     setVideoEnded(false);
     setAvatarReady(false);
     setIsPlaying(true);
 
-    // Bring bg video back
     const bg = bgVideoRef.current;
     if (bg) {
       bg.style.transition = 'opacity 1.2s ease';
@@ -103,23 +97,21 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       bg.play().catch(() => {});
     }
 
-    // Replay main video with sound
     v.currentTime = 0;
     v.muted = false;
     setIsMuted(false);
     v.play().catch(() => {
-      // If still blocked, play muted
       v.muted = true;
       setIsMuted(true);
       v.play().catch(() => {});
     });
   }, []);
 
-  // ── Keep bg in sync ────────────────────────────────────────
+  // ── Keep bg in sync with main video ───────────────────────
   const onVideoPlay  = useCallback(() => { bgVideoRef.current?.play().catch(() => {}); }, []);
   const onVideoPause = useCallback(() => { if (!videoEnded) bgVideoRef.current?.pause(); }, [videoEnded]);
 
-  // ── Scroll to next ─────────────────────────────────────────
+  // ── Scroll to next section ────────────────────────────────
   const scrollToNext = useCallback((e) => {
     e.stopPropagation();
     heroRef.current?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' });
@@ -147,14 +139,14 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       <div className={styles.gradientTop}    aria-hidden="true" />
       <div className={styles.vignette}       aria-hidden="true" />
 
-      {/* Three.js bokeh particle layer */}
+      {/* Three.js bokeh particles */}
       <CinematicLayer />
 
-      {/* Foreground: video → avatar crossfade */}
+      {/* Video / avatar area */}
       <div className={styles.videoWrap}>
         <div className={styles.videoGlow} aria-hidden="true" />
 
-        {/* Main video — plays once, no loop */}
+        {/* Main video — plays once, click hero to pause/resume */}
         <video
           ref={videoRef}
           className={`${styles.mainVideo} ${videoEnded ? styles.videoHidden : ''}`}
@@ -165,14 +157,13 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
           onEnded={onVideoEnded}
         />
 
-        {/* Avatar — fades in after video ends, click to replay */}
+        {/* Avatar — click to replay */}
         {videoEnded && (
           <div
             className={`${styles.avatarWrap} ${avatarReady ? styles.avatarVisible : ''}`}
             onClick={handleAvatarClick}
             role="button"
             aria-label="Replay intro video"
-            title="Click to replay"
           >
             <img
               src={avatarSrc}
@@ -181,7 +172,6 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
               onLoad={() => setAvatarReady(true)}
               onError={() => setAvatarReady(true)}
             />
-            {/* Replay hint on hover */}
             <div className={styles.replayHint}>
               <IconPlay />
               <span>Replay</span>
@@ -192,22 +182,26 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
         <div className={styles.videoEdgeFade} aria-hidden="true" />
       </div>
 
+      {/* Click feedback — brief icon flash in center */}
+      {clickFeedback && (
+        <div className={styles.clickFeedback}>
+          {clickFeedback === 'pause' ? <IconPause /> : <IconPlay />}
+        </div>
+      )}
+
       {/* Text content */}
       <div className={styles.content}>
         <span className={styles.tagline}>
           Data Analytics Engineer&nbsp;·&nbsp;Portfolio 2026
         </span>
-
         <h1 className={styles.name}>
           <span className={styles.firstName}>Sanjana</span>
           <span className={styles.lastName}>Reddy</span>
         </h1>
-
         <p className={styles.role}>
           Building data systems from raw signals to executive dashboards —<br />
           across research, healthcare, and business domains.
         </p>
-
         <div className={styles.stats}>
           <div className={styles.stat}>
             <span className={styles.statNum}>3</span>
@@ -226,27 +220,19 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
         </div>
       </div>
 
-      {/* Glassmorphism controls */}
+      {/* Controls */}
       <div className={styles.controls}>
         {!videoEnded && (
-          <button
-            className={styles.ctrlBtn}
-            onClick={togglePlay}
-            aria-label={isPlaying ? 'Pause video' : 'Play video'}
-          >
+          <button className={styles.ctrlBtn} onClick={(e) => { e.stopPropagation(); handleHeroClick(); }} aria-label={isPlaying ? 'Pause' : 'Play'}>
             {isPlaying ? <IconPause /> : <IconPlay />}
           </button>
         )}
-        <button
-          className={styles.ctrlBtn}
-          onClick={toggleMute}
-          aria-label={isMuted ? 'Unmute' : 'Mute'}
-        >
+        <button className={styles.ctrlBtn} onClick={toggleMute} aria-label={isMuted ? 'Unmute' : 'Mute'}>
           {isMuted ? <IconMuted /> : <IconSound />}
         </button>
       </div>
 
-      {/* Sound hint — only shows if browser blocked autoplay with sound */}
+      {/* Sound hint — only if browser blocked autoplay sound */}
       {showHint && !videoEnded && (
         <div className={`${styles.soundHint} ${hintFading ? styles.soundHintFade : ''}`}>
           <span className={styles.hintPulse} />
@@ -255,15 +241,9 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       )}
 
       {/* Scroll indicator */}
-      <button
-        className={styles.scrollIndicator}
-        onClick={scrollToNext}
-        aria-label="Scroll to next section"
-      >
+      <button className={styles.scrollIndicator} onClick={scrollToNext} aria-label="Scroll down">
         <span className={styles.scrollLabel}>scroll</span>
-        <span className={styles.scrollTrack}>
-          <span className={styles.scrollThumb} />
-        </span>
+        <span className={styles.scrollTrack}><span className={styles.scrollThumb} /></span>
       </button>
 
     </section>

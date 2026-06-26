@@ -399,6 +399,40 @@
   100% { top: 140%; opacity: 0; }
 }
 
+/* ── Click feedback (pause/play icon flash) ──────── */
+.clickFeedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(6, 10, 12, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+  animation: feedbackPop 0.65s ease forwards;
+}
+
+.clickFeedback svg {
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes feedbackPop {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  25%  { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
 /* ── Video → avatar transition ───────────────────── */
 .videoHidden {
   opacity: 0;
