@@ -1,0 +1,443 @@
+/* ═══════════════════════════════════════════════════
+   VideoIntro — Cinematic Hero
+   Dark · Warm orange · Glassmorphism · Premium motion
+   ═══════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: #060a0c;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ── Ambient blurred background video ─────────────── */
+.bgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(52px) saturate(1.5) brightness(0.3);
+  transform: scale(1.1);
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── Gradient overlays ────────────────────────────── */
+.gradientLeft {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(6, 10, 12, 0.98) 0%,
+    rgba(6, 10, 12, 0.95) 30%,
+    rgba(6, 10, 12, 0.65) 52%,
+    transparent 72%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gradientRight {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    rgba(6, 10, 12, 0.7) 0%,
+    transparent 38%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gradientBottom {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 44%;
+  background: linear-gradient(to top, rgba(6, 10, 12, 0.97) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gradientTop {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 20%;
+  background: linear-gradient(to bottom, rgba(6, 10, 12, 0.75) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 38%,
+    rgba(6, 10, 12, 0.6) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Main video (talking head) ────────────────────── */
+.videoWrap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 62%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.videoGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 55% 48%,
+    rgba(255, 140, 66, 0.28) 0%,
+    rgba(255, 100, 40, 0.08) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+.mainVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.videoEdgeFade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(6, 10, 12, 0.92) 0%, transparent 28%),
+    linear-gradient(to bottom, transparent 58%, rgba(6, 10, 12, 0.9) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Entrance keyframes (CSS-native, no JS dependency) ── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes heroSlideUp {
+  from { opacity: 0; transform: translateY(72px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Text content ─────────────────────────────────── */
+.content {
+  position: relative;
+  z-index: 10;
+  padding: 0 6vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tagline {
+  font-family: var(--f-mono);
+  font-size: clamp(9px, 1vw, 11px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: clamp(18px, 2.5vh, 30px);
+  display: block;
+  opacity: 0.9;
+  animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+  margin-bottom: clamp(22px, 3vh, 38px);
+}
+
+.firstName,
+.lastName {
+  font-family: var(--f-display);
+  font-size: clamp(66px, 10vw, 152px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  display: block;
+  line-height: 0.96;
+}
+
+.firstName {
+  animation: heroSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+}
+
+.lastName {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.65);
+  text-stroke: 1.5px rgba(255, 255, 255, 0.65);
+  text-shadow: 0 0 50px rgba(255, 140, 66, 0.12);
+  animation: heroSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.85s backwards;
+}
+
+.role {
+  font-family: var(--f-body);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(28px, 4vh, 48px);
+  animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s backwards;
+}
+
+/* ── Stats row ────────────────────────────────────── */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.5s backwards;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.statNum {
+  font-family: var(--f-mono);
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 500;
+  color: var(--orange);
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.statDivider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+/* ── Glassmorphism controls ───────────────────────── */
+.controls {
+  position: absolute;
+  bottom: clamp(28px, 5vh, 50px);
+  left: 6vw;
+  z-index: 20;
+  display: flex;
+  gap: 10px;
+}
+
+.ctrlBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.18s ease,
+    box-shadow 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctrlBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.1),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.ctrlBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 140, 66, 0.5);
+  color: var(--orange);
+  transform: scale(1.06);
+  box-shadow: 0 0 22px rgba(255, 140, 66, 0.22);
+}
+
+.ctrlBtn:active { transform: scale(0.95); }
+
+/* ── Sound hint ───────────────────────────────────── */
+.soundHint {
+  position: absolute;
+  top: clamp(80px, 10vh, 112px);
+  right: clamp(20px, 3vw, 44px);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.soundHintFade {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.hintPulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    box-shadow: 0 0 0 0 rgba(255,140,66,0.6); }
+  50%       { opacity: 0.7; transform: scale(1.18); box-shadow: 0 0 0 5px rgba(255,140,66,0); }
+}
+
+/* ── Scroll indicator ─────────────────────────────── */
+.scrollIndicator {
+  position: absolute;
+  bottom: clamp(28px, 5vh, 50px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  transition: opacity 0.22s;
+}
+
+.scrollIndicator:hover { opacity: 0.65; }
+
+.scrollLabel {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.scrollTrack {
+  display: block;
+  width: 1px;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.scrollThumb {
+  display: block;
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to bottom, transparent, var(--orange), transparent);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+  border-radius: 1px;
+}
+
+@keyframes scrollPulse {
+  0%   { top: -40%; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 140%; opacity: 0; }
+}
+
+/* ── Video → avatar transition ───────────────────── */
+.videoHidden {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+
+.avatarWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 1.4s ease 0.3s; /* slight delay for crossfade */
+  pointer-events: none;
+}
+
+.avatarVisible {
+  opacity: 1;
+}
+
+/* ── Avatar image ─────────────────────────────── */
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+/* ── Mobile ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .videoWrap { width: 100%; opacity: 0.4; }
+  .content { padding: 0 5vw; max-width: 100%; }
+  .controls { left: 5vw; bottom: clamp(20px, 6vh, 44px); }
+  .scrollIndicator { display: none; }
+  .soundHint { top: 72px; right: 16px; }
+  .firstName, .lastName { font-size: clamp(54px, 15vw, 84px); }
+  .stats { gap: 16px; }
+  .statDivider { height: 22px; }
+}

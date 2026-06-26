@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanjana Reddy Nenturi · Data Analytics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a1418;--bg2:#0d1a1f;--bg3:#11242b;
+  --surface:#f5f1e8;--surface2:#ebe5d4;
+  --muted:#6b8089;--muted2:#4a6873;
+  --cyan:#4dd0e1;--cyand:#00838f;
+  --orange:#FF8C42;--ink:#061013;
+  --rule:rgba(245,241,232,0.1);--rule2:rgba(245,241,232,0.06);
+  --fd:'Instrument Serif',serif;
+  --fb:'Geist',system-ui,sans-serif;
+  --fm:'Geist Mono',monospace;
+  --maxw:1320px;--pad:clamp(20px,5vw,64px);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--surface);font-family:var(--fb);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--cyan);color:var(--ink)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px var(--pad);
+  transition:background .3s,padding .3s;
+}
+nav.scrolled{
+  background:rgba(10,20,24,.75);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--rule);
+  padding:14px var(--pad);
+}
+.nav-logo{font-family:var(--fm);font-size:15px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-family:var(--fm);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--surface)}
+.nav-cta{font-family:var(--fm);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--cyand);padding:8px 20px;border-radius:2px;transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--cyan);color:var(--ink)}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}}
+
+/* ── HERO ────────────────────────────────────────────── */
+#hero{
+  position:relative;width:100%;height:100svh;min-height:600px;
+  overflow:hidden;background:#060a0c;
+  display:flex;align-items:center;
+}
+#hero canvas{position:absolute;inset:0;z-index:1;mix-blend-mode:screen}
+.hero-gradient{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(to right,rgba(6,10,12,.97) 0%,rgba(6,10,12,.8) 35%,rgba(6,10,12,.3) 65%,transparent 85%),
+    linear-gradient(to top,rgba(6,10,12,.9) 0%,transparent 40%),
+    linear-gradient(to bottom,rgba(6,10,12,.6) 0%,transparent 30%);
+}
+.hero-content{
+  position:relative;z-index:10;
+  padding:0 var(--pad);max-width:700px;
+}
+.hero-eyebrow{
+  display:block;font-family:var(--fm);font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--orange);
+  margin-bottom:clamp(16px,2.5vh,28px);
+  opacity:0;animation:fadeUp .8s .3s forwards;
+}
+.hero-name{
+  display:flex;flex-direction:column;
+  line-height:.9;margin-bottom:clamp(20px,3vh,36px);
+}
+.hero-first,.hero-last{
+  font-family:var(--fd);font-size:clamp(64px,9.5vw,148px);
+  font-weight:400;letter-spacing:-.02em;display:block;line-height:1;
+  opacity:0;
+}
+.hero-first{color:#fff;animation:fadeUp .9s .5s forwards}
+.hero-last{
+  color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.7);
+  text-shadow:0 0 40px rgba(255,140,66,.15);
+  animation:fadeUp .9s .65s forwards;
+}
+.hero-role{
+  font-size:clamp(13px,1.4vw,17px);font-weight:300;
+  color:rgba(255,255,255,.55);line-height:1.7;
+  opacity:0;animation:fadeUp .8s .85s forwards;
+}
+.hero-scroll{
+  position:absolute;bottom:clamp(28px,5vh,48px);left:50%;
+  transform:translateX(-50%);z-index:20;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;background:none;border:none;padding:8px;
+  opacity:0;animation:fadeIn 1s 1.4s forwards;
+}
+.hero-scroll:hover{opacity:.7}
+.scroll-label{font-family:var(--fm);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.scroll-track{display:block;width:1px;height:52px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;border-radius:1px}
+.scroll-thumb{display:block;position:absolute;top:-40%;left:0;width:100%;height:40%;background:linear-gradient(to bottom,transparent,#FF8C42,transparent);animation:scrollPulse 2s ease-in-out infinite;border-radius:1px}
+@keyframes scrollPulse{0%{top:-40%;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:140%;opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:768px){.hero-scroll{display:none}}
+
+/* ── SECTION COMMONS ─────────────────────────────────── */
+.section-eyebrow{display:block;font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:20px}
+.section-heading{font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:400;line-height:1.1;color:var(--surface)}
+.section-heading em{font-style:italic;color:var(--muted)}
+.inner{max-width:var(--maxw);margin:0 auto}
+
+/* ── WORK ────────────────────────────────────────────── */
+#work{background:var(--bg);padding:120px var(--pad) 100px}
+#work .section-eyebrow{color:var(--cyan)}
+.work-header{margin-bottom:72px}
+.work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:2px}
+.work-card{
+  background:var(--bg2);border:1px solid var(--rule);padding:40px 36px;
+  opacity:0;transform:translateY(32px);
+  transition:opacity .6s,transform .6s,border-color .25s;
+}
+.work-card.visible{opacity:1;transform:translateY(0)}
+.work-card:hover{border-color:rgba(77,208,225,.25)}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.case-num{font-family:var(--fm);font-size:11px;letter-spacing:.15em;color:var(--cyan)}
+.card-links{display:flex;gap:16px}
+.card-link{font-family:var(--fm);font-size:11px;letter-spacing:.06em;color:var(--muted);transition:color .2s}
+.card-link:hover{color:var(--cyan)}
+.card-title{font-family:var(--fd);font-size:26px;font-weight:400;color:var(--surface);margin-bottom:6px;line-height:1.15}
+.card-subtitle{font-family:var(--fm);font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+.tag{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);border:1px solid var(--rule);padding:3px 9px;border-radius:2px}
+.card-desc{font-size:14px;line-height:1.65;color:var(--muted);margin-bottom:24px}
+.impact-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.impact-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:var(--surface2)}
+.impact-dot{flex-shrink:0;width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:6px}
+@media(max-width:640px){.work-grid{grid-template-columns:1fr}.work-card{padding:28px 20px}}
+
+/* ── STACK ───────────────────────────────────────────── */
+#stack{background:var(--bg2);padding:120px var(--pad) 100px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+#stack .section-eyebrow{color:var(--orange)}
+.stack-header{margin-bottom:64px}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:48px 40px}
+.stack-category{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.stack-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.stack-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--muted);transition:color .2s}
+.stack-item:hover{color:var(--surface2)}
+.stack-bullet{flex-shrink:0;width:4px;height:4px;border-radius:50%;background:var(--rule);margin-top:7px}
+@media(max-width:480px){.stack-grid{grid-template-columns:1fr 1fr;gap:32px 20px}}
+
+/* ── TRAJECTORY ──────────────────────────────────────── */
+#trajectory{background:var(--bg);padding:120px var(--pad) 100px}
+#trajectory .section-eyebrow{color:var(--cyan)}
+.traj-header{margin-bottom:72px}
+.traj-entry{display:grid;grid-template-columns:200px 40px 1fr;gap:0 20px}
+.traj-left{display:flex;flex-direction:column;align-items:flex-end;padding-top:2px;padding-bottom:48px}
+.traj-period{font-family:var(--fm);font-size:11px;letter-spacing:.08em;color:var(--muted);text-align:right;margin-bottom:6px}
+.traj-type{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;text-align:right}
+.traj-connector{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.traj-dot{flex-shrink:0;width:9px;height:9px;border-radius:50%;margin-bottom:8px}
+.traj-line{flex:1;width:1px;background:var(--rule)}
+.traj-right{padding-bottom:48px}
+.traj-role{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--surface);margin-bottom:4px;line-height:1.2}
+.traj-org{font-family:var(--fm);font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:16px}
+.traj-loc{color:var(--muted2)}
+.traj-highlights{list-style:none;display:flex;flex-direction:column;gap:8px}
+.traj-highlight{font-size:13.5px;line-height:1.6;color:var(--muted);padding-left:14px;position:relative}
+.traj-highlight::before{content:'';position:absolute;left:0;top:9px;width:4px;height:1px;background:var(--rule)}
+@media(max-width:768px){
+  .traj-entry{grid-template-columns:1fr;padding-left:24px;border-left:1px solid var(--rule);margin-bottom:40px}
+  .traj-connector{display:none}
+  .traj-left{align-items:flex-start;padding-bottom:10px}
+  .traj-right{padding-bottom:0}
+}
+
+/* ── CONTACT ─────────────────────────────────────────── */
+#contact{background:var(--bg3);padding:120px var(--pad) 0;border-top:1px solid var(--rule)}
+#contact .section-eyebrow{color:var(--orange)}
+.contact-inner{display:grid;grid-template-columns:1fr 380px;gap:80px;padding-bottom:100px;border-bottom:1px solid var(--rule)}
+.contact-email{font-family:var(--fm);font-size:14px;letter-spacing:.04em;color:var(--cyan);border-bottom:1px solid var(--cyand);padding-bottom:2px;transition:opacity .2s;display:inline-block;margin-top:36px}
+.contact-email:hover{opacity:.7}
+.contact-sub{font-size:15px;line-height:1.7;color:var(--muted);max-width:440px;margin-top:28px}
+.social-links{display:flex;flex-direction:column;justify-content:center;gap:2px}
+.social-row{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--rule);transition:opacity .2s}
+.social-row:first-child{border-top:1px solid var(--rule)}
+.social-row:hover{opacity:.6}
+.social-label{font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.social-handle{font-family:var(--fm);font-size:12px;color:var(--surface2)}
+footer{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+.footer-name,.footer-right{font-family:var(--fm);font-size:11px;letter-spacing:.1em;color:var(--muted2)}
+@media(max-width:900px){.contact-inner{grid-template-columns:1fr;gap:48px}}
+@media(max-width:480px){footer{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo"><span>S</span>RN</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#trajectory">Trajectory</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:sanjanareddynenturi@gmail.com" class="nav-cta">Let's talk</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Data Analytics Engineer</span>
+    <div class="hero-name">
+      <span class="hero-first">Sanjana</span>
+      <span class="hero-last">Reddy.</span>
+    </div>
+    <p class="hero-role">
+      Building data systems end to end — pipelines, models,<br>
+      and the infrastructure that makes insights actually ship.
+    </p>
+  </div>
+  <button class="hero-scroll" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">
+    <span class="scroll-label">Scroll</span>
+    <span class="scroll-track"><span class="scroll-thumb"></span></span>
+  </button>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="inner">
+    <header class="work-header">
+      <span class="section-eyebrow">Selected Work</span>
+      <h2 class="section-heading">Systems built,<br><em>problems solved.</em></h2>
+    </header>
+    <div class="work-grid" id="workGrid"></div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="inner">
+    <header class="stack-header">
+      <span class="section-eyebrow">Technology</span>
+      <h2 class="section-heading">What I build with.</h2>
+    </header>
+    <div class="stack-grid" id="stackGrid"></div>
+  </div>
+</section>
+
+<!-- TRAJECTORY -->
+<section id="trajectory">
+  <div class="inner">
+    <header class="traj-header">
+      <span class="section-eyebrow">Journey</span>
+      <h2 class="section-heading">The trajectory.</h2>
+    </header>
+    <div id="trajList"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="contact-inner">
+      <div>
+        <span class="section-eyebrow">Get in Touch</span>
+        <h2 class="section-heading">Let's build<br><em>something worth it.</em></h2>
+        <p class="contact-sub">Open to data engineering, analytics engineering, and data science roles at companies that care about what they ship.</p>
+        <a href="mailto:sanjanareddynenturi@gmail.com" class="contact-email">sanjanareddynenturi@gmail.com</a>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/sanjana421" target="_blank" class="social-row">
+          <span class="social-label">GitHub</span>
+          <span class="social-handle">sanjana421 ↗</span>
+        </a>
+        <a href="https://linkedin.com/in/sanjana-reddy-nenturi" target="_blank" class="social-row">
+          <span class="social-label">LinkedIn</span>
+          <span class="social-handle">sanjana-reddy-nenturi ↗</span>
+        </a>
+        <a href="mailto:sanjanareddynenturi@gmail.com" class="social-row">
+          <span class="social-label">Email</span>
+          <span class="social-handle">sanjanareddynenturi@gmail.com ↗</span>
+        </a>
+      </div>
+    </div>
+    <footer>
+      <span class="footer-name">Sanjana Reddy Nenturi</span>
+      <span class="footer-right">© 2025 · Data Analytics Engineer</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+/* ── DATA ───────────────────────────────────────────── */
+const work = [
+  {
+    id:'01', title:'Heartland Payment Systems',
+    subtitle:'ETL Pipeline & Business Intelligence Platform',
+    tags:['Python','SQL','Power BI','ETL','DAX'],
+    description:"Designed and deployed end-to-end ETL pipelines processing financial transaction data for Heartland's analytics infrastructure. Built Power BI dashboards with DAX measures used by business stakeholders across multiple product lines.",
+    impact:['Reduced data processing latency by 40%','Automated 12 previously manual reporting workflows','Dashboards adopted across 3 business units'],
+    github:null,link:null
+  },
+  {
+    id:'02', title:'IU CARES Lab + SPIN Lab',
+    subtitle:'Neuroimaging Data Pipeline & Research Analytics',
+    tags:['fMRIPrep','FreeSurfer','SLURM','Python','BIDS','Apptainer'],
+    description:"Built and maintained production neuroimaging pipelines at Indiana University's CARES Lab and Speech Production, Imaging, and Neuroscience (SPIN) Lab. Standardized multi-site fMRI datasets to BIDS format and automated preprocessing via SLURM HPC scheduling.",
+    impact:['Processed 200+ subject datasets through fMRIPrep pipeline','Cut manual preprocessing time from days to hours','Standardized data collection across 2 research labs'],
+    github:null,link:null
+  },
+  {
+    id:'03', title:'FiReco',
+    subtitle:'Financial Reconciliation Automation System',
+    tags:['Python','SQL','Pandas','Automation'],
+    description:"Built a financial reconciliation system that automates matching and discrepancy detection across transaction ledgers. Replaced a manual Excel-based process with a Python pipeline that flags mismatches and generates audit-ready reports.",
+    impact:['Eliminated 8+ hours of weekly manual reconciliation','Achieved 99.3% match accuracy on transaction sets','Audit report generation reduced from 2 days to 15 minutes'],
+    github:null,link:null
+  },
+  {
+    id:'04', title:'FormulaHub',
+    subtitle:'F1 Analytics Dashboard',
+    tags:['Python','FastF1','Power BI','SQL','Data Viz'],
+    description:"End-to-end F1 racing analytics platform built on the FastF1 API. Ingests lap-by-lap telemetry, computes driver performance metrics, and surfaces insights through an interactive Power BI dashboard.",
+    impact:['Ingests telemetry for all 20 drivers across full seasons','Custom DAX measures for pace delta, tire deg, and pit strategy','Interactive drill-through by driver, circuit, and stint'],
+    github:'https://github.com/sanjana421/FormulaHub',link:null
+  },
+  {
+    id:'05', title:'NVIDIA Research',
+    subtitle:'GPU Performance Benchmarking & Data Analysis',
+    tags:['Python','CUDA','Pandas','NumPy','Data Analysis'],
+    description:"Contributed to GPU performance research at NVIDIA, analyzing benchmark datasets to surface bottlenecks across compute workloads. Built data pipelines to aggregate multi-run benchmark results and statistical summaries.",
+    impact:['Processed results across 50+ hardware configurations','Built reusable analysis modules used across the research team'],
+    github:null,link:null
+  },
+  {
+    id:'06', title:'GeoAI',
+    subtitle:'Geospatial Machine Learning Platform',
+    tags:['Python','GeoPandas','scikit-learn','SQL','GIS'],
+    description:"Developed a geospatial data pipeline and ML classification system for analyzing location-tagged datasets. Integrated spatial joins, feature engineering on geographic attributes, and a classification model for land-use pattern prediction.",
+    impact:['Achieved 87% classification accuracy on geospatial test set','Automated spatial feature extraction across 10k+ records','Pipeline reduced manual GIS analysis from weeks to hours'],
+    github:'https://github.com/sanjana421/GeoAI',link:null
+  }
+];
+
+const stack = [
+  {category:'Data & Analytics',items:['Python (Pandas, NumPy, SciPy)','SQL (PostgreSQL, MySQL, SQLite)','Power BI (DAX, Power Query)','SQL-based data modeling & schema design','ETL / ELT pipeline architecture','Apache Airflow']},
+  {category:'Research & HPC',items:['fMRIPrep','FreeSurfer','SLURM workload manager','Apptainer (Singularity)','BIDS standard','MATLAB']},
+  {category:'Engineering & Dev',items:['React / Next.js','JavaScript / TypeScript','Three.js','GSAP','PySide6 / Qt','Git / GitHub']},
+  {category:'Audio & Signal',items:['sounddevice','scipy.signal','Real-time audio processing','DSP pipeline design']},
+  {category:'Infra & Cloud',items:['Linux / Bash','Docker','AWS (S3, EC2)','HPC cluster environments','REST APIs']}
+];
+
+const timeline = [
+  {period:'2024 – Present',role:'Data Analytics Engineer',org:'IU CARES Lab + SPIN Lab',location:'Bloomington, IN',type:'research',color:'#4dd0e1',
+    highlights:['Built and maintained production fMRI preprocessing pipelines (fMRIPrep, FreeSurfer, SLURM)','Standardized multi-site datasets to BIDS format across two research labs','Developed analytics infrastructure for acoustic and neurological research','Automated HPC job scheduling reducing preprocessing time from days to hours']},
+  {period:'2023 – 2024',role:'Data Analytics Engineer',org:'Heartland Payment Systems',location:'Indianapolis, IN',type:'industry',color:'#FF8C42',
+    highlights:['Designed ETL pipelines for financial transaction data ingestion and transformation','Built Power BI dashboards with DAX measures adopted across 3 business units','Automated 12 manual reporting workflows, cutting processing latency by 40%']},
+  {period:'Jun – Dec 2025',role:'Data & ML Researcher',org:'GeoAI Project',location:'Remote',type:'project',color:'rgba(245,241,232,0.4)',
+    highlights:['Built geospatial ML pipeline with sklearn classification (87% accuracy)','Automated spatial feature extraction across 10k+ geographic records','Integrated GeoPandas + PostGIS for spatial joins and land-use analysis']},
+  {period:'2022 – 2023',role:'Research Analyst',org:'NVIDIA',location:'Santa Clara, CA',type:'industry',color:'#FF8C42',
+    highlights:['Analyzed GPU benchmark datasets across 50+ hardware configurations','Built reusable Python analysis modules for the broader research team','Surfaced performance bottlenecks across compute workloads']},
+  {period:'2019 – 2023',role:'M.S. Intelligent Systems Engineering',org:'Indiana University Bloomington',location:'Bloomington, IN',type:'education',color:'#6b8089',
+    highlights:['Specialization in data systems, machine learning, and computational methods','Coursework: Data Mining, ML Systems, Neuroimaging Data Analysis, HPC','Thesis-adjacent work: fMRI pipeline automation and neuroimaging analytics']}
+];
+
+/* ── RENDER WORK ─────────────────────────────────────── */
+const workGrid = document.getElementById('workGrid');
+work.forEach(item => {
+  const linksHtml = [
+    item.github ? `<a href="${item.github}" target="_blank" class="card-link">GitHub ↗</a>` : '',
+    item.link   ? `<a href="${item.link}"   target="_blank" class="card-link">Live ↗</a>`   : ''
+  ].join('');
+  const tagsHtml   = item.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const impactHtml = item.impact.map(p => `<li class="impact-item"><span class="impact-dot"></span>${p}</li>`).join('');
+  workGrid.insertAdjacentHTML('beforeend', `
+    <article class="work-card">
+      <div class="card-top"><span class="case-num">${item.id}</span><div class="card-links">${linksHtml}</div></div>
+      <h3 class="card-title">${item.title}</h3>
+      <p class="card-subtitle">${item.subtitle}</p>
+      <div class="card-tags">${tagsHtml}</div>
+      <p class="card-desc">${item.description}</p>
+      <ul class="impact-list">${impactHtml}</ul>
+    </article>`);
+});
+
+/* ── RENDER STACK ────────────────────────────────────── */
+const stackGrid = document.getElementById('stackGrid');
+stack.forEach(group => {
+  const itemsHtml = group.items.map(i => `<li class="stack-item"><span class="stack-bullet"></span>${i}</li>`).join('');
+  stackGrid.insertAdjacentHTML('beforeend', `
+    <div><h3 class="stack-category">${group.category}</h3><ul class="stack-list">${itemsHtml}</ul></div>`);
+});
+
+/* ── RENDER TRAJECTORY ───────────────────────────────── */
+const trajList = document.getElementById('trajList');
+timeline.forEach((entry, i) => {
+  const highlightsHtml = entry.highlights.map(h => `<li class="traj-highlight">${h}</li>`).join('');
+  const isLast = i === timeline.length - 1;
+  trajList.insertAdjacentHTML('beforeend', `
+    <div class="traj-entry">
+      <div class="traj-left">
+        <span class="traj-period">${entry.period}</span>
+        <span class="traj-type" style="color:${entry.color}">${entry.type}</span>
+      </div>
+      <div class="traj-connector">
+        <span class="traj-dot" style="background:${entry.color}"></span>
+        ${isLast ? '' : '<span class="traj-line"></span>'}
+      </div>
+      <div class="traj-right">
+        <h3 class="traj-role">${entry.role}</h3>
+        <p class="traj-org">${entry.org}<span class="traj-loc"> · ${entry.location}</span></p>
+        <ul class="traj-highlights">${highlightsHtml}</ul>
+      </div>
+    </div>`);
+});
+
+/* ── NAV SCROLL ──────────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+/* ── CARD SCROLL REVEAL ──────────────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, {threshold:0.1});
+document.querySelectorAll('.work-card').forEach(c => observer.observe(c));
+
+/* ── CANVAS PARTICLES ────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx    = canvas.getContext('2d');
+  const COUNT  = 260;
+  const palette= ['#FF8C42','#FFB347','#FFF0D4','#FF6B35','#FFFFFF','#FFD08A'];
+
+  let W, H, particles;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function mkParticle(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      z: Math.random() * 2 + 0.3,
+      r: Math.random() * 1.6 + 0.4,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      alpha: Math.random() * 0.5 + 0.15,
+      speed: Math.random() * 0.008 + 0.003,
+      phase: Math.random() * Math.PI * 2,
+      amp: Math.random() * 0.6 + 0.2,
+      vy: -(Math.random() * 0.25 + 0.08),
+      vx: (Math.random() - 0.5) * 0.06
+    };
+  }
+
+  function init(){
+    resize();
+    particles = Array.from({length:COUNT}, mkParticle);
+  }
+
+  let mouse = {x:0, y:0};
+  let camX = 0, camY = 0;
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+  let t = 0;
+  function draw(){
+    t += 0.016;
+    ctx.clearRect(0, 0, W, H);
+
+    const tx = (mouse.x / W - 0.5) * 18;
+    const ty = (mouse.y / H - 0.5) * 10;
+    camX += (tx - camX) * 0.04;
+    camY += (ty - camY) * 0.04;
+
+    particles.forEach(p => {
+      const wobble = Math.sin(t * p.speed * 60 + p.phase) * p.amp;
+      const sx = p.x + camX * p.z + wobble;
+      const sy = p.y + camY * p.z;
+
+      ctx.beginPath();
+      const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, p.r * 2.2);
+      grad.addColorStop(0,   p.color + 'ff');
+      grad.addColorStop(0.4, p.color + '99');
+      grad.addColorStop(1,   p.color + '00');
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = p.alpha;
+      ctx.arc(sx, sy, p.r * 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      if(p.x < -10) p.x = W + 10;
+      if(p.x > W+10) p.x = -10;
+    });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  init();
+  draw();
+})();
+</script>
+</body>
+</html>

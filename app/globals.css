@@ -1,0 +1,120 @@
+/* ═══════════════════════════════════════════════════════
+   SANJANA REDDY NENTURI — Portfolio globals
+   Palette: deep dark · bone · electric cyan · warm orange
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Dark backgrounds */
+  --bg:          #080e12;
+  --bg-2:        #0c151a;
+  --bg-3:        #101e25;
+  --bg-hero:     #060a0c;
+  --bg-card:     #0d191f;
+
+  /* Text */
+  --surface:     #f0ece0;
+  --surface-2:   #e4deca;
+  --ink:         #061013;
+  --muted:       #607880;
+  --muted-2:     #415860;
+
+  /* Accents */
+  --cyan:        #4dd0e1;
+  --cyan-d:      #00838f;
+  --cyan-soft:   rgba(77, 208, 225, 0.12);
+  --orange:      #FF8C42;
+  --orange-d:    #e0702a;
+  --orange-soft: rgba(255, 140, 66, 0.14);
+
+  /* Rules */
+  --rule:        rgba(240, 236, 224, 0.08);
+  --rule-2:      rgba(240, 236, 224, 0.05);
+
+  /* Typography */
+  --f-display:   'Instrument Serif', 'Times New Roman', serif;
+  --f-body:      'Geist', system-ui, sans-serif;
+  --f-mono:      'Geist Mono', ui-monospace, monospace;
+
+  --maxw: 1380px;
+  --pad:  clamp(20px, 5vw, 72px);
+
+  /* Transitions */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--surface);
+  font-family: var(--f-body);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--orange);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--muted-2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+/* Shared section styles */
+.section-eyebrow {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
+
+/* Reveal animation utility (used by IntersectionObserver) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}

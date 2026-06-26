@@ -1,0 +1,211 @@
+/* ═══════════════════════════════════════════════════
+   Trajectory — Career Timeline
+   ═══════════════════════════════════════════════════ */
+
+.section {
+  background: var(--bg);
+  padding: 130px var(--pad) 110px;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.header {
+  margin-bottom: 80px;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
+
+.heading {
+  font-family: var(--f-display);
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 400;
+  color: var(--surface);
+  line-height: 1.08;
+}
+
+/* ── Timeline container ───────────────────────────── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Single entry ─────────────────────────────────── */
+.entry {
+  display: grid;
+  grid-template-columns: 200px 44px 1fr;
+  gap: 0 16px;
+}
+
+/* ── Left: date + badges ──────────────────────────── */
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 1px;
+  padding-bottom: 56px;
+  gap: 6px;
+}
+
+.period {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.4;
+}
+
+.typeBadge {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: right;
+  border: 1px solid;
+  padding: 2px 7px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.currentBadge {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(255, 140, 66, 0.3);
+  padding: 2px 7px;
+  border-radius: 2px;
+  background: var(--orange-soft);
+  animation: activePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.65; }
+}
+
+/* ── Connector ────────────────────────────────────── */
+.connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3px;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.line {
+  flex: 1;
+  width: 1px;
+  background: var(--rule);
+  min-height: 40px;
+  margin-bottom: 0;
+}
+
+/* ── Right: content ───────────────────────────────── */
+.right {
+  padding-bottom: 56px;
+}
+
+.role {
+  font-family: var(--f-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 400;
+  color: var(--surface);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.org {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+}
+
+.location {
+  color: var(--muted-2);
+}
+
+.highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.highlight {
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  padding-left: 16px;
+  position: relative;
+}
+
+.highlight::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 5px;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ── Mobile ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section { padding: 80px var(--pad) 80px; }
+
+  .entry {
+    grid-template-columns: 1fr;
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .connector { display: none; }
+
+  .entry::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 3px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--muted-2);
+  }
+
+  .left {
+    align-items: flex-start;
+    padding-bottom: 8px;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .right { padding-bottom: 0; }
+}
