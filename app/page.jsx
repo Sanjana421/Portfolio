@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import AuroraBackground from '@/components/AuroraBackground/AuroraBackground';
 import Nav from '@/components/Nav/Nav';
 import Work from '@/components/Work/Work';
 import Stack from '@/components/Stack/Stack';
@@ -14,6 +15,7 @@ const VideoIntro = dynamic(
 export default function Home() {
   return (
     <main>
+      <AuroraBackground />
       <Nav />
       <VideoIntro videoSrc="/Portfolio/videos/intro.mp4" />
       <Work />

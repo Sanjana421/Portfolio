@@ -101,4 +101,21 @@ export const work = [
     link: null,
     github: null,
   },
+  {
+    id: '07',
+    featured: false,
+    title: 'Robotics Lab',
+    org: 'Sphoorthy Engineering College · 2021-2023',
+    subtitle: 'Government-Funded AI Prototypes',
+    tags: ['Jetson Nano', 'OpenCV', 'CNN', 'Edge AI'],
+    description:
+      "Won competitive Government of India (NewGen IEDC / DST) innovation funding three years running, building three funded prototypes from concept to MVP.",
+    impact: [
+      'Density-based traffic control on NVIDIA Jetson Nano + OpenCV',
+      'License-plate recognition system',
+      'Published CNN age-group classification (FaceNet, 85% test accuracy)',
+    ],
+    link: null,
+    github: null,
+  },
 ];

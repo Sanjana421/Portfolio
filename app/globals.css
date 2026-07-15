@@ -1,61 +1,58 @@
 /* ═══════════════════════════════════════════════════════
-   SANJANA REDDY NENTURI — Portfolio globals
-   Palette: deep dark · bone · electric cyan · warm orange
+   SANJANA REDDY NENTURI — Portfolio globals (v2 theme)
+   Deep space base · aurora · glass · domain-coded accents
    ═══════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Dark backgrounds */
-  --bg:          #080e12;
-  --bg-2:        #0c151a;
-  --bg-3:        #101e25;
+  /* Backgrounds */
+  --bg:          #05070d;
+  --bg-2:        #080b14;
+  --bg-3:        #0c1120;
   --bg-hero:     #060a0c;
-  --bg-card:     #0d191f;
+  --bg-card:     #0b1020;
 
   /* Text */
-  --surface:     #f0ece0;
-  --surface-2:   #e4deca;
-  --ink:         #061013;
-  --muted:       #607880;
-  --muted-2:     #415860;
+  --surface:     #eef2fb;
+  --surface-2:   #dbe2ef;
+  --ink:         #05070d;
+  --muted:       #8a97ad;
+  --muted-2:     #5b6678;
 
   /* Accents */
-  --cyan:        #4dd0e1;
-  --cyan-d:      #00838f;
-  --cyan-soft:   rgba(77, 208, 225, 0.12);
-  --orange:      #FF8C42;
+  --cyan:        #38e1c4;
+  --cyan-d:      #0e7490;
+  --cyan-soft:   rgba(56, 225, 196, 0.12);
+  --violet:      #a78bfa;
+  --amber:       #fbbf24;
+  --green:       #5eead4;
+  --pink:        #f472b6;
+  --orange:      #FF8C42;   /* kept — hero uses this */
   --orange-d:    #e0702a;
   --orange-soft: rgba(255, 140, 66, 0.14);
 
-  /* Rules */
-  --rule:        rgba(240, 236, 224, 0.08);
-  --rule-2:      rgba(240, 236, 224, 0.05);
+  /* Glass surfaces */
+  --glass:       rgba(255, 255, 255, 0.035);
+  --glass-2:     rgba(255, 255, 255, 0.06);
+  --glass-brd:   rgba(255, 255, 255, 0.09);
+  --rule:        rgba(255, 255, 255, 0.08);
+  --rule-2:      rgba(255, 255, 255, 0.05);
 
   /* Typography */
   --f-display:   'Instrument Serif', 'Times New Roman', serif;
   --f-body:      'Geist', system-ui, sans-serif;
   --f-mono:      'Geist Mono', ui-monospace, monospace;
 
-  --maxw: 1380px;
+  --maxw: 1200px;
   --pad:  clamp(20px, 5vw, 72px);
 
-  /* Transitions */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
 html, body {
   background: var(--bg);
   color: var(--surface);
@@ -66,55 +63,36 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+img, video { display: block; max-width: 100%; }
+::selection { background: var(--cyan); color: var(--ink); }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-img, video {
-  display: block;
-  max-width: 100%;
-}
-
-::selection {
-  background: var(--orange);
-  color: #fff;
-}
-
-/* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--muted-2); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
 
-/* Shared section styles */
+/* Shared eyebrow */
 .section-eyebrow {
   display: block;
   font-family: var(--f-mono);
-  font-size: 10px;
-  letter-spacing: 0.25em;
+  font-size: 11px;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 18px;
+  color: var(--cyan);
+  margin-bottom: 16px;
 }
 
-/* Reveal animation utility (used by IntersectionObserver) */
+/* Reveal-on-scroll utility */
 [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
-[data-reveal].revealed {
-  opacity: 1;
-  transform: translateY(0);
+[data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  [data-reveal] { opacity: 1; transform: none; }
 }
