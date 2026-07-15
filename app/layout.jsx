@@ -2,13 +2,13 @@ import './globals.css';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Sanjana Reddy Nenturi · Data Analytics Engineer',
+  title: 'Sanjana Reddy Nenturi · Analytics & Data Engineer',
   description:
-    'Data Analytics Engineer and Research Scientist building data systems, audio DSP platforms, neuroimaging pipelines, and analytics infrastructure. M.S. Intelligent Systems Engineering, Indiana University. Three concurrent research and consulting roles.',
+    'Analytics and data engineer building data systems from raw signals to dashboards — audio DSP platforms, neuroimaging QC pipelines, and analytics infrastructure. M.S. Intelligent Systems Engineering, Indiana University.',
   keywords: [
-    'Data Analytics Engineer', 'Python', 'SQL', 'Power BI', 'ETL',
-    'fMRIPrep', 'SLURM', 'React', 'Indiana University', 'Sanjana Reddy Nenturi',
-    'DistVRT', 'CARES Lab', 'Neuroimaging', 'LiDAR', 'GeoAI',
+    'Analytics Engineer', 'Data Engineer', 'Python', 'SQL', 'Power BI', 'ETL',
+    'DuckDB', 'Analytics Engineering', 'fMRIPrep', 'React', 'Indiana University', 'Sanjana Reddy Nenturi',
+    'DistVRT', 'CARES Lab', 'Neuroimaging', 'Machine Learning',
   ],
   authors: [{ name: 'Sanjana Reddy Nenturi' }],
   openGraph: {

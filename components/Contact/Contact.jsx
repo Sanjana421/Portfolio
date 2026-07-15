@@ -38,9 +38,9 @@ export default function Contact() {
               <em>something worth it.</em>
             </h2>
             <p className={styles.sub}>
-              Open to data engineering, analytics engineering, and research data roles
-              at companies that care about what they ship. F-1 OPT active through Jan 2027.
-              Anywhere in the US.
+              Open to analytics engineering, data engineering, and AI/ML data roles
+              at companies that care about what they ship. F-1 OPT active through Jan 2027,
+              STEM-eligible. Anywhere in the US.
             </p>
             <a href="mailto:sanjanareddynenturi@gmail.com" className={styles.emailBtn}>
               sanjanareddynenturi@gmail.com
