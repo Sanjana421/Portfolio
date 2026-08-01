@@ -1,8 +1,8 @@
 .aurora { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg); pointer-events: none; }
-.aurora span { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.42; mix-blend-mode: screen; animation: drift 24s var(--ease-in-out) infinite alternate; }
-.a1 { width: 46vw; height: 46vw; left: -8vw; top: -8vw; background: radial-gradient(circle, #0e7490, transparent 60%); }
-.a2 { width: 42vw; height: 42vw; right: -10vw; top: 22vh; background: radial-gradient(circle, #6d28d9, transparent 60%); animation-duration: 30s; }
-.a3 { width: 40vw; height: 40vw; left: 24vw; bottom: -16vw; background: radial-gradient(circle, #0f766e, transparent 60%); animation-duration: 34s; }
+.aurora span { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.52; mix-blend-mode: screen; animation: drift 24s var(--ease-in-out) infinite alternate; }
+.a1 { width: 46vw; height: 46vw; left: -8vw; top: -8vw; background: radial-gradient(circle, #14b8d4, transparent 60%); }
+.a2 { width: 42vw; height: 42vw; right: -10vw; top: 22vh; background: radial-gradient(circle, #9333ea, transparent 60%); animation-duration: 30s; }
+.a3 { width: 40vw; height: 40vw; left: 24vw; bottom: -16vw; background: radial-gradient(circle, #0d9c7a, transparent 60%); animation-duration: 34s; }
 @keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(6vw,4vw,0) scale(1.15); } }
 
 .gridLines {
@@ -15,6 +15,6 @@
 }
 .glow {
   position: fixed; width: 520px; height: 520px; border-radius: 50%; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle, rgba(56,225,196,0.05), transparent 60%);
+  background: radial-gradient(circle, rgba(45,216,255,0.065), transparent 60%);
   transform: translate(-50%, -50%);
 }
