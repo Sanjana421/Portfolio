@@ -9,10 +9,53 @@
   height: 100svh;
   min-height: 620px;
   overflow: hidden;
-  background: #060a0c;
+  background: radial-gradient(ellipse at 30% 20%, #0d1310 0%, #060a0c 55%, #05070a 100%);
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+/* ── Warm ambient glow — brings life/color into the dark hero ── */
+.heroAurora {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.auroraBlobA,
+.auroraBlobB {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  animation: heroAuroraDrift 20s ease-in-out infinite alternate;
+}
+
+.auroraBlobA {
+  width: 42vw;
+  height: 42vw;
+  left: -6vw;
+  top: -10vw;
+  background: radial-gradient(circle, rgba(255, 179, 71, 0.24), transparent 62%);
+  opacity: 0.6;
+}
+
+.auroraBlobB {
+  width: 38vw;
+  height: 38vw;
+  right: 6vw;
+  bottom: -12vw;
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.2), transparent 60%);
+  opacity: 0.5;
+  animation-duration: 26s;
+  animation-delay: -6s;
+}
+
+@keyframes heroAuroraDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(3vw, 2vw, 0) scale(1.14); }
 }
 
 /* ── Ambient blurred background video ─────────────── */
@@ -35,9 +78,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(6, 10, 12, 0.98) 0%,
-    rgba(6, 10, 12, 0.95) 30%,
-    rgba(6, 10, 12, 0.65) 52%,
+    rgba(6, 10, 12, 0.93) 0%,
+    rgba(6, 10, 12, 0.88) 30%,
+    rgba(6, 10, 12, 0.55) 52%,
     transparent 72%
   );
   z-index: 2;
@@ -49,7 +92,7 @@
   inset: 0;
   background: linear-gradient(
     to left,
-    rgba(6, 10, 12, 0.7) 0%,
+    rgba(6, 10, 12, 0.55) 0%,
     transparent 38%
   );
   z-index: 2;
@@ -60,7 +103,7 @@
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 44%;
-  background: linear-gradient(to top, rgba(6, 10, 12, 0.97) 0%, transparent 100%);
+  background: linear-gradient(to top, rgba(6, 10, 12, 0.88) 0%, transparent 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -69,7 +112,7 @@
   position: absolute;
   left: 0; right: 0; top: 0;
   height: 20%;
-  background: linear-gradient(to bottom, rgba(6, 10, 12, 0.75) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(6, 10, 12, 0.6) 0%, transparent 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -79,8 +122,8 @@
   inset: 0;
   background: radial-gradient(
     ellipse at center,
-    transparent 38%,
-    rgba(6, 10, 12, 0.6) 100%
+    transparent 40%,
+    rgba(6, 10, 12, 0.48) 100%
   );
   z-index: 2;
   pointer-events: none;
@@ -92,11 +135,12 @@
   right: 0;
   top: 0;
   bottom: 0;
-  width: 68%;
+  width: 60%;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3.5vh 3vw 3.5vh 0;
 }
 
 .videoGlow {
@@ -104,13 +148,19 @@
   inset: 0;
   background: radial-gradient(
     ellipse at 55% 48%,
-    rgba(255, 140, 66, 0.28) 0%,
-    rgba(255, 100, 40, 0.08) 45%,
+    rgba(255, 179, 71, 0.34) 0%,
+    rgba(255, 100, 40, 0.1) 45%,
     transparent 70%
   );
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: screen;
+  animation: videoGlowBreathe 6s ease-in-out infinite;
+}
+
+@keyframes videoGlowBreathe {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
 }
 
 .mainVideo {
@@ -121,6 +171,11 @@
   display: block;
   pointer-events: none;
   will-change: transform;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 40px 90px -30px rgba(0, 0, 0, 0.65),
+    0 0 70px rgba(255, 140, 66, 0.1);
 }
 
 .videoEdgeFade {
@@ -503,7 +558,9 @@
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero { min-height: 100svh; }
-  .videoWrap { width: 100%; opacity: 0.45; }
+  .videoWrap { width: 100%; opacity: 0.45; padding: 0; }
+  .mainVideo { border-radius: 0; box-shadow: none; }
+  .auroraBlobA, .auroraBlobB { width: 70vw; height: 70vw; }
   .content {
     padding: 0 5vw;
     max-width: 100%;
