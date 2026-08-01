@@ -1,26 +1,29 @@
 /* ═══════════════════════════════════════════════════════
-   SANJANA REDDY NENTURI — Portfolio globals (v2 theme)
-   Deep space base · aurora · glass · domain-coded accents
+   SANJANA REDDY NENTURI — Portfolio globals (v3 theme)
+   Richer layered charcoal base · aurora · warm glass · domain-coded accents
+   (v3: softened off pure-black per 2026 dark-mode direction — richer,
+   warmer background/glass layers. Accent hues left untouched since they
+   double as the Work/Stack/Trajectory visualization colors.)
    ═══════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Backgrounds */
-  --bg:          #05070d;
-  --bg-2:        #080b14;
-  --bg-3:        #0c1120;
-  --bg-hero:     #060a0c;
-  --bg-card:     #0b1020;
+  /* Backgrounds — softer, richer charcoal/navy layers instead of near-pure-black */
+  --bg:          #0a0c14;
+  --bg-2:        #0d1019;
+  --bg-3:        #12151f;
+  --bg-hero:     #0a0d10;
+  --bg-card:     #10131f;
 
   /* Text */
   --surface:     #eef2fb;
   --surface-2:   #dbe2ef;
-  --ink:         #05070d;
+  --ink:         #0a0c14;
   --muted:       #8a97ad;
   --muted-2:     #5b6678;
 
-  /* Accents */
+  /* Accents — unchanged: these double as Work/Stack/Trajectory viz colors */
   --cyan:        #38e1c4;
   --cyan-d:      #0e7490;
   --cyan-soft:   rgba(56, 225, 196, 0.12);
@@ -32,12 +35,12 @@
   --orange-d:    #e0702a;
   --orange-soft: rgba(255, 140, 66, 0.14);
 
-  /* Glass surfaces */
-  --glass:       rgba(255, 255, 255, 0.035);
-  --glass-2:     rgba(255, 255, 255, 0.06);
-  --glass-brd:   rgba(255, 255, 255, 0.09);
-  --rule:        rgba(255, 255, 255, 0.08);
-  --rule-2:      rgba(255, 255, 255, 0.05);
+  /* Glass surfaces — softly warmed (cream-tinted white) for a richer, less-cold glass */
+  --glass:       rgba(255, 250, 245, 0.04);
+  --glass-2:     rgba(255, 250, 245, 0.065);
+  --glass-brd:   rgba(255, 250, 245, 0.1);
+  --rule:        rgba(255, 250, 245, 0.085);
+  --rule-2:      rgba(255, 250, 245, 0.055);
 
   /* Typography */
   --f-display:   'Instrument Serif', 'Times New Roman', serif;
