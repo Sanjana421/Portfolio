@@ -39,27 +39,40 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       });
   }, []);
 
-  // ── Click hero = toggle pause/resume ───────────────────────
-  const handleHeroClick = useCallback(() => {
-    const v = videoRef.current;
-    if (!v || videoEnded) return;
-    if (v.paused) {
-      v.play(); setIsPlaying(true); setClickFeedback('play');
-    } else {
-      v.pause(); setIsPlaying(false); setClickFeedback('pause');
-    }
-    setTimeout(() => setClickFeedback(null), 700);
-  }, [videoEnded]);
-
-  // ── Mute toggle ────────────────────────────────────────────
-  const toggleMute = useCallback((e) => {
-    e.stopPropagation();
+  // ── Shared mute-toggle logic (used by hero click + mute button) ──
+  const applyMuteToggle = useCallback(() => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
     setIsMuted(v.muted);
+    setClickFeedback(v.muted ? 'muted' : 'sound');
     if (!v.muted) { setHintFading(true); setTimeout(() => setShowHint(false), 700); }
+    setTimeout(() => setClickFeedback(null), 700);
   }, []);
+
+  // ── Click anywhere on hero/video = toggle mute ─────────────
+  const handleHeroClick = useCallback(() => {
+    if (videoEnded) return;
+    applyMuteToggle();
+  }, [videoEnded, applyMuteToggle]);
+
+  // ── Dedicated mute button (same action, kept as its own control) ──
+  const toggleMute = useCallback((e) => {
+    e.stopPropagation();
+    applyMuteToggle();
+  }, [applyMuteToggle]);
+
+  // ── Dedicated Play/Pause button — no longer tied to hero click ──
+  const togglePlayPause = useCallback((e) => {
+    e && e.stopPropagation();
+    const v = videoRef.current;
+    if (!v || videoEnded) return;
+    if (v.paused) {
+      v.play(); setIsPlaying(true);
+    } else {
+      v.pause(); setIsPlaying(false);
+    }
+  }, [videoEnded]);
 
   // ── Replay (resets video and plays from start with sound) ──
   const replayVideo = useCallback((e) => {
@@ -116,6 +129,12 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       {/* Ambient blurred background */}
       <video ref={bgVideoRef} className={styles.bgVideo} src={videoSrc} autoPlay loop muted playsInline aria-hidden="true" />
 
+      {/* Warm ambient glow — adds life/color behind the dark overlays */}
+      <div className={styles.heroAurora} aria-hidden="true">
+        <span className={styles.auroraBlobA} />
+        <span className={styles.auroraBlobB} />
+      </div>
+
       {/* Cinematic gradient overlays */}
       <div className={styles.gradientLeft}   aria-hidden="true" />
       <div className={styles.gradientRight}  aria-hidden="true" />
@@ -168,7 +187,7 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
       {/* Click feedback flash */}
       {clickFeedback && (
         <div className={styles.clickFeedback}>
-          {clickFeedback === 'pause' ? <IconPause /> : <IconPlay />}
+          {clickFeedback === 'muted' ? <IconMuted /> : <IconSound />}
         </div>
       )}
 
@@ -189,7 +208,7 @@ export default function VideoIntro({ videoSrc = '/Portfolio/videos/intro.mp4', a
 
       {/* Controls — bottom right */}
       <div className={styles.controls} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.ctrlBtn} onClick={(e) => { e.stopPropagation(); handleHeroClick(); }} aria-label={isPlaying ? 'Pause' : 'Play'}>
+        <button className={styles.ctrlBtn} onClick={togglePlayPause} aria-label={isPlaying ? 'Pause' : 'Play'}>
           {isPlaying ? <IconPause /> : <IconPlay />}
         </button>
         <button className={styles.ctrlBtn} onClick={toggleMute} aria-label={isMuted ? 'Unmute' : 'Mute'}>
